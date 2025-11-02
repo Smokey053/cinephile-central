@@ -27,7 +27,7 @@ const MovieCard = ({ movie, type = "movie" }) => {
 
   return (
     <Card className="movie-card h-100 fade-in">
-      <Link to={`/${type}/${movie.id}`} className="card-link">
+      <div className="card-link-wrapper">
         {tmdbRating > 0 && (
           <div className="rating-badge">
             <FaStar className="star" />
@@ -37,9 +37,13 @@ const MovieCard = ({ movie, type = "movie" }) => {
         <div className="card-image-wrapper">
           <Card.Img variant="top" src={posterUrl} alt={title} loading="lazy" />
           <div className="card-overlay">
-            <div className="overlay-content">
-              <span className="view-details">View Details</span>
-            </div>
+            <Link
+              to={`/${type}/${movie.id}`}
+              className="view-details-btn"
+              onClick={(e) => e.stopPropagation()}
+            >
+              View Details
+            </Link>
           </div>
         </div>
         <Card.Body>
@@ -61,7 +65,7 @@ const MovieCard = ({ movie, type = "movie" }) => {
             )}
           </Card.Text>
         </Card.Body>
-      </Link>
+      </div>
     </Card>
   );
 };

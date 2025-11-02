@@ -13,6 +13,10 @@ import "./Footer.css";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <footer className="modern-footer">
       <Container>
@@ -35,16 +39,24 @@ const Footer = () => {
             <h4 className="footer-heading">Explore</h4>
             <ul className="footer-links">
               <li>
-                <Link to="/">Home</Link>
+                <Link to="/" onClick={scrollToTop}>
+                  Home
+                </Link>
               </li>
               <li>
-                <Link to="/movies">Movies</Link>
+                <Link to="/movies" onClick={scrollToTop}>
+                  Movies
+                </Link>
               </li>
               <li>
-                <Link to="/tv-shows">TV Shows</Link>
+                <Link to="/tv-shows" onClick={scrollToTop}>
+                  TV Shows
+                </Link>
               </li>
               <li>
-                <Link to="/search">Search</Link>
+                <Link to="/search" onClick={scrollToTop}>
+                  Search
+                </Link>
               </li>
             </ul>
           </Col>
@@ -54,13 +66,19 @@ const Footer = () => {
             <h4 className="footer-heading">Account</h4>
             <ul className="footer-links">
               <li>
-                <Link to="/login">Login</Link>
+                <Link to="/login" onClick={scrollToTop}>
+                  Login
+                </Link>
               </li>
               <li>
-                <Link to="/signup">Sign Up</Link>
+                <Link to="/signup" onClick={scrollToTop}>
+                  Sign Up
+                </Link>
               </li>
               <li>
-                <Link to="/profile">Profile</Link>
+                <Link to="/profile" onClick={scrollToTop}>
+                  Profile
+                </Link>
               </li>
             </ul>
           </Col>

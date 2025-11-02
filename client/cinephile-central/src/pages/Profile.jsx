@@ -1,4 +1,3 @@
-// src/pages/Profile.jsx
 import React, { useState, useEffect } from "react";
 import {
   Container,
@@ -9,13 +8,23 @@ import {
   Row,
   Col,
   Spinner,
+  Badge,
+  ListGroup,
 } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
-import { FaUser, FaEnvelope, FaCalendar, FaSave, FaEdit } from "react-icons/fa";
+import { useNavigate, Link } from "react-router-dom";
+import {
+  FaUser,
+  FaEnvelope,
+  FaCalendar,
+  FaSave,
+  FaEdit,
+  FaStar,
+  FaTrash,
+} from "react-icons/fa";
 import { auth } from "../services/firebaseClient";
 import { updateProfile } from "firebase/auth";
-import apiClient from "../services/api";
+import { reviewsService } from "../services/api";
 import "./Profile.css";
 
 const Profile = () => {
@@ -27,9 +36,10 @@ const Profile = () => {
 
   const [profileData, setProfileData] = useState({
     displayName: "",
-    bio: "",
     photoURL: "",
   });
+  const [userReviews, setUserReviews] = useState([]);
+  const [loadingReviews, setLoadingReviews] = useState(false);
 
   useEffect(() => {
     if (!currentUser) {
@@ -40,10 +50,32 @@ const Profile = () => {
     // Initialize profile data
     setProfileData({
       displayName: currentUser.displayName || "",
-      bio: "",
       photoURL: currentUser.photoURL || "",
     });
+
+    // Fetch user reviews
+    fetchUserReviews();
   }, [currentUser, navigate]);
+
+  const fetchUserReviews = async () => {
+    if (!currentUser) return;
+
+    setLoadingReviews(true);
+    try {
+      // Note: This is a placeholder. You'll need to implement a backend endpoint
+      // that fetches reviews by userId. For now, we'll leave it empty.
+      // const token = await currentUser.getIdToken();
+      // const response = await apiClient.get('/user/reviews', {
+      //   headers: { Authorization: `Bearer ${token}` }
+      // });
+      // setUserReviews(response.data);
+      setUserReviews([]);
+    } catch (error) {
+      console.error("Error fetching user reviews:", error);
+    } finally {
+      setLoadingReviews(false);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,13 +88,7 @@ const Profile = () => {
     setMessage({ type: "", text: "" });
 
     try {
-      // Update in Realtime Database first (this checks for unique displayName)
-      const token = await currentUser.getIdToken();
-      await apiClient.put("/profile", profileData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      // If successful, update Firebase Auth profile
+      // Update Firebase Auth profile
       await updateProfile(auth.currentUser, {
         displayName: profileData.displayName,
         photoURL: profileData.photoURL,
@@ -72,28 +98,31 @@ const Profile = () => {
       setEditing(false);
     } catch (error) {
       console.error("Error updating profile:", error);
-
-      // Check if it's a displayName taken error
-      if (
-        error.response?.status === 409 ||
-        error.response?.data?.error === "displayNameTaken"
-      ) {
-        setMessage({
-          type: "danger",
-          text:
-            error.response?.data?.message ||
-            "This display name is already taken. Please choose another one.",
-        });
-      } else {
-        setMessage({
-          type: "danger",
-          text:
-            error.response?.data?.message ||
-            "Failed to update profile. Please try again.",
-        });
-      }
+      setMessage({
+        type: "danger",
+        text: "Failed to update profile. Please try again.",
+      });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDeleteReview = async (reviewId, movieId) => {
+    if (!window.confirm("Are you sure you want to delete this review?")) {
+      return;
+    }
+
+    try {
+      const token = await currentUser.getIdToken();
+      await reviewsService.deleteReview(reviewId, movieId, token);
+      setMessage({ type: "success", text: "Review deleted successfully!" });
+      fetchUserReviews();
+    } catch (error) {
+      console.error("Error deleting review:", error);
+      setMessage({
+        type: "danger",
+        text: "Failed to delete review. Please try again.",
+      });
     }
   };
 
@@ -194,18 +223,6 @@ const Profile = () => {
                     />
                   </Form.Group>
 
-                  <Form.Group className="mb-3">
-                    <Form.Label>Bio</Form.Label>
-                    <Form.Control
-                      as="textarea"
-                      rows={3}
-                      name="bio"
-                      value={profileData.bio}
-                      onChange={handleChange}
-                      placeholder="Tell us about yourself..."
-                    />
-                  </Form.Group>
-
                   <Form.Group className="mb-4">
                     <Form.Label>Profile Photo URL</Form.Label>
                     <Form.Control
@@ -245,7 +262,6 @@ const Profile = () => {
                         setEditing(false);
                         setProfileData({
                           displayName: currentUser.displayName || "",
-                          bio: "",
                           photoURL: currentUser.photoURL || "",
                         });
                       }}
@@ -257,22 +273,79 @@ const Profile = () => {
                 </Form>
               ) : (
                 <div>
-                  <div className="profile-details mb-4">
-                    <h5 className="mb-3">About</h5>
-                    <p className="text-muted">
-                      {profileData.bio ||
-                        "No bio added yet. Click edit to add one!"}
-                    </p>
-                  </div>
                   <Button
                     variant="outline-primary"
                     onClick={() => setEditing(true)}
-                    className="btn-edit"
+                    className="btn-edit mb-4"
                   >
                     <FaEdit className="me-2" />
                     Edit Profile
                   </Button>
                 </div>
+              )}
+            </Card.Body>
+          </Card>
+
+          {/* User Reviews Section */}
+          <Card className="profile-card shadow-lg mt-4">
+            <Card.Body className="p-4">
+              <h4 className="mb-4">
+                <FaStar className="me-2 text-warning" />
+                My Reviews
+              </h4>
+
+              {loadingReviews ? (
+                <div className="text-center py-4">
+                  <Spinner animation="border" variant="primary" />
+                  <p className="mt-2 text-muted">Loading reviews...</p>
+                </div>
+              ) : userReviews.length === 0 ? (
+                <div className="text-center py-5">
+                  <FaStar
+                    className="mb-3"
+                    style={{ fontSize: "3rem", opacity: 0.3 }}
+                  />
+                  <p className="text-muted mb-3">
+                    You haven't written any reviews yet.
+                  </p>
+                  <Button as={Link} to="/movies" variant="primary">
+                    Browse Movies
+                  </Button>
+                </div>
+              ) : (
+                <ListGroup variant="flush">
+                  {userReviews.map((review) => (
+                    <ListGroup.Item
+                      key={review.id}
+                      className="review-item d-flex justify-content-between align-items-start"
+                    >
+                      <div className="flex-grow-1">
+                        <div className="d-flex align-items-center mb-2">
+                          <Badge bg="warning" text="dark" className="me-2">
+                            <FaStar /> {review.rating}/5
+                          </Badge>
+                          <small className="text-muted">
+                            {new Date(review.createdAt).toLocaleDateString()}
+                          </small>
+                        </div>
+                        <p className="mb-1">{review.text}</p>
+                        <small className="text-muted">
+                          Movie ID: {review.movieId}
+                        </small>
+                      </div>
+                      <Button
+                        variant="outline-danger"
+                        size="sm"
+                        onClick={() =>
+                          handleDeleteReview(review.id, review.movieId)
+                        }
+                        title="Delete review"
+                      >
+                        <FaTrash />
+                      </Button>
+                    </ListGroup.Item>
+                  ))}
+                </ListGroup>
               )}
             </Card.Body>
           </Card>

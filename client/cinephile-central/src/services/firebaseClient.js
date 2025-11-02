@@ -20,7 +20,7 @@ const firebaseConfig = {
 
 if (!firebaseConfig.apiKey) {
   console.warn(
-    'Firebase config is not fully set. Add VITE_FIREBASE_* variables to client/cinephile-central/.env.local'
+    "Firebase config is not fully set. Add VITE_FIREBASE_* variables to client/cinephile-central/.env.local"
   );
 }
 

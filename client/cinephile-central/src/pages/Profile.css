@@ -7,7 +7,10 @@
 .profile-header .page-title {
   font-size: 2rem;
   font-weight: 700;
-  color: var(--text-primary);
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   display: flex;
   align-items: center;
 }
@@ -20,8 +23,9 @@
 }
 
 .profile-card:hover {
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 40px rgba(229, 9, 20, 0.2);
   transform: translateY(-5px);
+  border-color: var(--accent-primary);
 }
 
 .profile-avatar-section {
@@ -64,6 +68,7 @@
   background: var(--bg-secondary);
   padding: 1.5rem;
   border-radius: 12px;
+  border: 1px solid var(--border-color);
 }
 
 .info-item {
@@ -80,6 +85,7 @@
 .info-item:hover {
   transform: translateX(5px);
   border-color: var(--accent-primary);
+  box-shadow: 0 2px 8px rgba(229, 9, 20, 0.1);
 }
 
 .info-icon {
@@ -94,6 +100,7 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 0.25rem;
+  color: var(--text-secondary);
 }
 
 .info-item p {
@@ -121,12 +128,13 @@
   transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
+  border: 2px solid var(--accent-primary);
 }
 
 .btn-edit:hover,
 .btn-save:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3);
 }
 
 .form-label {
@@ -161,6 +169,31 @@ textarea.form-control {
   min-height: 100px;
 }
 
+/* Reviews Section */
+.review-item {
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 12px !important;
+  padding: 1rem !important;
+  margin-bottom: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.review-item:hover {
+  transform: translateX(5px);
+  border-color: var(--accent-primary) !important;
+  box-shadow: 0 4px 12px rgba(229, 9, 20, 0.15);
+}
+
+.review-item p {
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.review-item small {
+  color: var(--text-secondary);
+}
+
 @media (max-width: 768px) {
   .profile-header .page-title {
     font-size: 1.5rem;
@@ -181,5 +214,15 @@ textarea.form-control {
     flex-direction: column;
     text-align: center;
     gap: 0.5rem;
+  }
+
+  .review-item {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .review-item .btn {
+    align-self: flex-end;
+    margin-top: 0.5rem;
   }
 }

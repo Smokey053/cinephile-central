@@ -75,7 +75,7 @@
   overflow: hidden;
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  transition: var(--transition);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   cursor: pointer;
   height: 100%;
 }
@@ -89,9 +89,9 @@
   height: 100%;
   background: linear-gradient(
     135deg,
-    rgba(229, 9, 20, 0.1) 0%,
+    rgba(229, 9, 20, 0.15) 0%,
     transparent 50%,
-    rgba(245, 197, 24, 0.1) 100%
+    rgba(245, 197, 24, 0.15) 100%
   );
   opacity: 0;
   transition: var(--transition);
@@ -104,9 +104,9 @@
 }
 
 .movie-card:hover {
-  transform: translateY(-12px) scale(1.03) 0.2s ease-in-out;
-  box-shadow: 0 20px 40px rgba(229, 9, 20, 0.3),
-    0 0 0 1px var(--accent-primary);
+  transform: translateY(-16px) scale(1.02);
+  box-shadow: 0 24px 48px rgba(229, 9, 20, 0.35),
+    0 0 0 2px var(--accent-primary);
   border-color: var(--accent-primary);
 }
 
@@ -145,16 +145,16 @@
   height: 100%;
   background: linear-gradient(
     to top,
-    rgba(229, 9, 20, 0.555) 0%,
-    rgba(229, 9, 20, 0.397) 50%,
+    rgba(229, 9, 20, 0.85) 0%,
+    rgba(229, 9, 20, 0.6) 50%,
     transparent 100%
   );
   opacity: 0;
   transition: var(--transition);
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 1rem;
   z-index: 2;
 }
 
@@ -162,27 +162,29 @@
   opacity: 1;
 }
 
-.movie-card .overlay-content {
-  transform: translateY(20px);
-  transition: var(--transition);
-}
-
-.movie-card:hover .overlay-content {
-  transform: translateY(0);
-}
-
-.movie-card .view-details {
-  color: white;
-  font-weight: 600;
-  font-size: 1rem;
+.movie-card .view-details-btn {
+  color: white !important;
+  font-weight: 700;
+  font-size: 0.85rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 0.75rem 1.5rem;
-  background: rgba(255, 255, 255, 0.2);
+  letter-spacing: 0.5px;
+  padding: 0.5rem 1.25rem;
+  background: rgba(229, 9, 20, 0.9);
   backdrop-filter: blur(10px);
-  border-radius: 25px;
+  border-radius: 20px;
   border: 2px solid white;
   display: inline-block;
+  text-decoration: none;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.movie-card:hover .view-details-btn {
+  transform: translateY(0);
+  background: white;
+  color: var(--accent-primary) !important;
+  border-color: white;
 }
 
 .movie-card .card-title {
@@ -609,6 +611,53 @@ a:hover {
   
   .movie-card img {
     height: 280px;
+  }
+
+  /* Ensure hero carousel is below navbar on mobile */
+  .hero-carousel {
+    margin-top: 0;
+  }
+
+  /* Add top padding to home page content to avoid navbar overlap */
+  .home-page {
+    padding-top: 0;
+  }
+
+  /* Reduce carousel height on mobile */
+  .carousel-backdrop {
+    height: 350px !important;
+  }
+
+  /* Adjust content section padding on mobile */
+  .content-section {
+    padding: 2rem 0;
+  }
+
+  /* Add bottom padding to account for mobile bottom nav */
+  .home-page,
+  .movies-page,
+  .tv-shows-page,
+  .search-page,
+  .profile-page {
+    padding-bottom: 80px;
+  }
+}
+
+@media (max-width: 576px) {
+  .carousel-backdrop {
+    height: 300px !important;
+  }
+
+  .hero-caption .hero-title {
+    font-size: 1.5rem !important;
+  }
+
+  .hero-caption .hero-description {
+    font-size: 0.85rem !important;
+  }
+
+  .movie-card img {
+    height: 240px;
   }
 }
 
