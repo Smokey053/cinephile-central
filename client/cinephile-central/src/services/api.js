@@ -1,8 +1,16 @@
 // src/services/api.js
 import axios from "axios";
 
-const TMDB_API_KEY = "ab50b351df7f7ded6432c8db8d8100d8";
+// Read secret keys from Vite environment variables (VITE_*)
+// See client/cinephile-central/.env.example for the expected names.
+const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
+
+if (!TMDB_API_KEY) {
+  console.warn(
+    "VITE_TMDB_API_KEY is not set. TMDb requests will fail without an API key. Add it to client/cinephile-central/.env.local"
+  );
+}
 
 // TMDb API client
 const tmdbClient = axios.create({
@@ -13,10 +21,15 @@ const tmdbClient = axios.create({
 });
 
 // Firebase Functions client (for reviews)
+// Allow overriding the API base via VITE_API_BASE; otherwise fall back to existing logic
+const API_BASE = import.meta.env.VITE_API_BASE
+  ? import.meta.env.VITE_API_BASE
+  : import.meta.env.DEV
+  ? "http://localhost:5001/gen-lang-client-0239125682/us-central1/api"
+  : "https://us-central1-gen-lang-client-0239125682.cloudfunctions.net/api";
+
 const apiClient = axios.create({
-  baseURL: import.meta.env.DEV
-    ? "http://localhost:5001/gen-lang-client-0239125682/us-central1/api"
-    : "https://us-central1-gen-lang-client-0239125682.cloudfunctions.net/api",
+  baseURL: API_BASE,
 });
 
 // TMDb API Service

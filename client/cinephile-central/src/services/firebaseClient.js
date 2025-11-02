@@ -5,18 +5,24 @@ import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { getDatabase } from "firebase/database";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Firebase configuration populated from Vite environment variables.
+// Create a `client/cinephile-central/.env.local` with the VITE_FIREBASE_* variables.
 const firebaseConfig = {
-  apiKey: "AIzaSyDmpoE8jCddMSi5-hpmRrdQfIplERKF1Xc",
-  authDomain: "gen-lang-client-0239125682.firebaseapp.com",
-  databaseURL: "https://gen-lang-client-0239125682-default-rtdb.firebaseio.com",
-  projectId: "gen-lang-client-0239125682",
-  storageBucket: "gen-lang-client-0239125682.firebasestorage.app",
-  messagingSenderId: "958379450977",
-  appId: "1:958379450977:web:e3b900285a42518c138020",
-  measurementId: "G-SD9ZDEM9VY",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
+
+if (!firebaseConfig.apiKey) {
+  console.warn(
+    'Firebase config is not fully set. Add VITE_FIREBASE_* variables to client/cinephile-central/.env.local'
+  );
+}
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
