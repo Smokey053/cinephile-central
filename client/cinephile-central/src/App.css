@@ -163,7 +163,7 @@
 }
 
 .movie-card .view-details-btn {
-  color: rgba(255, 255, 255, 0.555) !important;
+  color: white !important;
   font-weight: 700;
   font-size: 0.85rem;
   text-transform: uppercase;
@@ -175,17 +175,14 @@
   border: 2px solid white;
   display: inline-block;
   text-decoration: none;
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%) translateY(10px);
+  transform: translateY(10px);
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .movie-card:hover .view-details-btn {
   transform: translateY(0);
-  background: rgba(255, 0, 0, 0.514);
+  background: white;
   color: var(--accent-primary) !important;
   border-color: white;
 }
