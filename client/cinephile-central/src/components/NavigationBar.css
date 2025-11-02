@@ -1,0 +1,313 @@
+/* NavigationBar.css */
+.modern-navbar {
+  background: var(--navbar-bg) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  padding: 0.75rem 0;
+  transition: var(--transition);
+  z-index: 1050 !important; /* Ensure navbar stays on top of carousel */
+  position: sticky !important;
+  top: 0;
+}
+
+/* Dark theme navbar */
+.app.dark .modern-navbar {
+  --navbar-bg: rgba(10, 14, 39, 0.95);
+}
+
+/* Light theme navbar */
+.app.light .modern-navbar {
+  --navbar-bg: rgba(255, 255, 255, 0.95);
+}
+
+.brand-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  color: var(--text-primary) !important;
+  transition: var(--transition);
+}
+
+.brand-logo:hover {
+  color: var(--accent-primary) !important;
+}
+
+.brand-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nav-item-custom {
+  color: var(--text-secondary) !important;
+  font-weight: 500;
+  padding: 0.5rem 1rem !important;
+  margin: 0 0.25rem;
+  border-radius: 8px;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+}
+
+.nav-item-custom:hover {
+  color: var(--accent-primary) !important;
+  background: var(--nav-hover-bg);
+}
+
+.nav-item-custom.active {
+  color: var(--accent-primary) !important;
+  background: var(--nav-active-bg);
+}
+
+/* Dark theme navigation items */
+.app.dark .nav-item-custom:hover {
+  --nav-hover-bg: rgba(229, 9, 20, 0.1);
+}
+
+.app.dark .nav-item-custom.active {
+  --nav-active-bg: rgba(229, 9, 20, 0.15);
+}
+
+/* Light theme navigation items */
+.app.light .nav-item-custom:hover {
+  --nav-hover-bg: rgba(229, 9, 20, 0.08);
+}
+
+.app.light .nav-item-custom.active {
+  --nav-active-bg: rgba(229, 9, 20, 0.12);
+}
+
+.theme-toggle {
+  color: var(--accent-secondary) !important;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  margin: 0 0.5rem;
+  border-radius: 50%;
+  transition: var(--transition);
+  border: none;
+}
+
+.theme-toggle:hover {
+  background: var(--theme-toggle-hover-bg);
+  transform: rotate(20deg);
+}
+
+/* Dark theme toggle button */
+.app.dark .theme-toggle:hover {
+  --theme-toggle-hover-bg: rgba(245, 197, 24, 0.2);
+}
+
+/* Light theme toggle button */
+.app.light .theme-toggle:hover {
+  --theme-toggle-hover-bg: rgba(245, 197, 24, 0.15);
+}
+
+/* User Dropdown Custom */
+.user-dropdown-wrapper {
+  position: relative;
+}
+
+.user-dropdown-toggle {
+  color: var(--text-primary) !important;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.user-dropdown-toggle:hover {
+  background: var(--nav-hover-bg);
+  color: var(--accent-primary) !important;
+  transform: translateY(-2px);
+}
+
+.user-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  min-width: 180px;
+  z-index: 1100 !important; /* Higher than navbar to appear above everything */
+  animation: dropdownFadeIn 0.2s ease-out;
+  overflow: hidden;
+}
+
+.user-dropdown-menu .dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.user-dropdown-menu .dropdown-item:hover {
+  background: var(--dropdown-hover-bg);
+  color: var(--accent-primary);
+  transform: translateX(5px);
+}
+
+.user-dropdown-menu .dropdown-divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 0.5rem 0;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-btn {
+  border-color: var(--accent-primary) !important;
+  color: var(--accent-primary) !important;
+  padding: 0.5rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 0 0 rgba(229, 9, 20, 0);
+}
+
+.login-btn:hover {
+  background: var(--accent-primary) !important;
+  color: white !important;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3);
+}
+
+@media (max-width: 991px) {
+  .modern-navbar .navbar-collapse {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+  }
+  
+  .nav-item-custom {
+    margin: 0.25rem 0;
+  }
+}
+
+/* Mobile Bottom Navigation */
+.mobile-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--navbar-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.5rem 0;
+  z-index: 1000;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  animation: slideInFromBottom 0.3s ease-out;
+}
+
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: var(--transition);
+  border-radius: 12px;
+  min-width: 60px;
+  position: relative;
+}
+
+.mobile-nav-item svg {
+  font-size: 1.3rem;
+  transition: var(--transition);
+}
+
+.mobile-nav-item span {
+  font-size: 0.7rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.mobile-nav-item.active {
+  color: var(--accent-primary);
+}
+
+.mobile-nav-item.active svg {
+  transform: scale(1.2);
+}
+
+.mobile-nav-item.active::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 3px;
+  background: var(--accent-gradient);
+  border-radius: 0 0 3px 3px;
+  animation: slideDown 0.3s ease-out;
+}
+
+.mobile-nav-item:active {
+  transform: scale(0.95);
+}
+
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateX(-50%) translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Add bottom padding to body on mobile to account for bottom nav */
+@media (max-width: 991px) {
+  body {
+    padding-bottom: 70px;
+  }
+}

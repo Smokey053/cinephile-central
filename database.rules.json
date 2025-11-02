@@ -1,0 +1,19 @@
+{
+  "rules": {
+    "reviews": {
+      "$movieId": {
+        ".read": true,
+        "$reviewId": {
+          ".write": "auth != null && (!data.exists() || data.child('authorId').val() === auth.uid)"
+        }
+      }
+    },
+    "users": {
+      ".indexOn": ["displayName"],
+      "$userId": {
+        ".read": true,
+        ".write": "auth != null && auth.uid === $userId"
+      }
+    }
+  }
+}
