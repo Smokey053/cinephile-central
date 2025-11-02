@@ -1,6 +1,6 @@
 # Cinephile Central
 
-A Movie & TV show app with Firebase integration.
+A Movie & TV show review app with Firebase integration.
 
 ## Features
 
