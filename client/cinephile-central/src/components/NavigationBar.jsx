@@ -247,47 +247,6 @@ const NavigationBar = ({ toggleTheme, theme }) => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-
-      {/* Mobile Bottom Navigation */}
-      <div className="mobile-bottom-nav d-lg-none">
-        <Link
-          to="/"
-          className={`mobile-nav-item ${isActive("/") ? "active" : ""}`}
-        >
-          <FaHome />
-          <span>Home</span>
-        </Link>
-        <Link
-          to="/movies"
-          className={`mobile-nav-item ${isActive("/movies") ? "active" : ""}`}
-        >
-          <FaFilm />
-          <span>Movies</span>
-        </Link>
-        <Link
-          to="/tv-shows"
-          className={`mobile-nav-item ${isActive("/tv-shows") ? "active" : ""}`}
-        >
-          <FaTv />
-          <span>TV</span>
-        </Link>
-        <Link
-          to="/search"
-          className={`mobile-nav-item ${isActive("/search") ? "active" : ""}`}
-        >
-          <FaSearch />
-          <span>Search</span>
-        </Link>
-        <Link
-          to={currentUser ? "/profile" : "/login"}
-          className={`mobile-nav-item ${
-            isActive("/profile") || isActive("/login") ? "active" : ""
-          }`}
-        >
-          <FaUser />
-          <span>{currentUser ? "Profile" : "Login"}</span>
-        </Link>
-      </div>
     </>
   );
 };
